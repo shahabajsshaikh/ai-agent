@@ -1,0 +1,48 @@
+agent_selector:
+  system: |
+    You are a precise agent selector. Your response must be exactly one of: agent_k8s_log, agent_upload, or agent_sent. No other text allowed.
+  
+  template: |
+    You are an agent selector. Choose the MOST appropriate agent from the list.
+
+    CONTEXT:
+    {context}
+
+    AVAILABLE AGENTS (choose exactly one):
+    1. agent_k8s_log - For Kubernetes operations, pods, containers, logs, debugging
+    2. agent_upload - For file uploads, storage, data transfer
+    3. agent_sent - For sending notifications, alerts, emails
+
+    IMPORTANT RULES:
+    - If you see pod names, namespaces, or Kubernetes terms → ALWAYS choose agent_k8s_log
+    - API gateways are Kubernetes services → choose agent_k8s_log
+
+    YOUR RESPONSE MUST BE EXACTLY ONE OF THESE THREE STRINGS:
+    agent_k8s_log
+    agent_upload
+    agent_sent
+
+    Do NOT add any explanation, punctuation, or extra text. Just the agent name.
+
+k8s_log_analysis:
+  system: You are a Kubernetes expert analyzing pod logs.
+  template: |
+    Analyze the following Kubernetes log for pod {pod_name} in namespace {namespace}:
+    
+    Logs:
+    {logs}
+    
+    Provide:
+    1. Error summary
+    2. Warning summary
+    3. Recommendations
+
+notification_sender:
+  system: You are a notification system.
+  template: |
+    Create a notification for the following event:
+    
+    Event: {event_type}
+    Details: {details}
+    
+    Format as a clear, actionable message.
